@@ -1,0 +1,221 @@
+html{
+    font-size: 62.5%;
+}
+body{
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+}
+.header-nav{
+    position: fixed;
+    width:100%;
+    top:0;
+    background: #fff;
+}
+.header-nav ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left:0;
+    margin: 0;
+    font-size:1.4rem;
+}
+.header-nav ul li{
+     text-align: center;
+     flex-grow: 1;
+     list-style-type: none;
+    flex-basis: 0;
+}
+.header-nav ul li a{
+    color: #000;
+    text-decoration: none;
+    display: block;
+    padding: 1rem;
+}
+.nav-active{
+    color: #2f78ec !important;
+    border-bottom: 0.3rem solid #2f78ec;
+}
+.content{
+    padding-top:4.2rem;
+}
+#trigger-point{
+    width: 100%;
+    padding-top: 4.2rem;
+    margin-top: -4.2rem;
+}
+#mixin-safety{
+    width: 100%;
+    padding-top: 4.2rem;
+    margin-top: -4.2rem;
+}
+#about-af{
+    width: 100%;
+    padding-top: 4.2rem;
+    margin-top: -4.2rem;
+}
+.box{
+    height:100%;
+    width:100%;
+}
+.img-box{
+    border-top:6px solid #f0f0f0;
+    padding: 2.5rem 2rem 1.5rem 2rem;
+}
+.img-box h2{
+    margin:0;
+    font-size:1.8rem;
+}
+.img-box img{
+    width:100%;
+}
+.img-margin-top{
+    margin-top:3rem;
+}
+.sub-img-box{
+    margin:2rem 0;
+}
+.sub-img-box h3{
+    margin:0;
+}
+.sub-img-box h3 img{
+    width: 2.5rem;
+    display: inline-block;
+    vertical-align: middle;
+}
+.sub-img-box h3 span{
+    margin-left: 0.7rem;
+    display: inline-block;
+    vertical-align: middle;
+    font-size:1.6rem;
+    font-weight:normal;
+    color: #363636;
+}
+.sub-img-box h3:before{
+    content:'';
+    height:100%;
+    width: 1px;
+    display: inline-block;
+    vertical-align: middle;
+
+}
+.sub-img-box ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding:0;
+}
+.sub-img-box ul li{
+    flex-grow: 1;
+    text-align: center;
+    list-style-type: none;
+    flex-basis: 0;
+}
+.sub-img-box ul li img{
+    width:6rem;
+}
+.sub-name{
+    font-size:1.4rem;
+    margin-bottom: 0;
+    color: #363636;
+}
+.sub-describe{
+    font-size:1.3rem;
+    margin-top:0.4rem;
+    color: #717171;
+}
+.mixin-safety-banner{
+    width:100%;
+}
+.pro-btn-list{
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.img-pro-btn{
+    padding:0.8rem 1rem ;
+    font-size: 1.2rem;
+    color: #494949;
+    background: linear-gradient(to bottom,#fff, #fbfbfb);
+}
+.img-pro-btn:nth-child(2),.img-pro-btn:nth-child(3){
+    border-left: 1px solid #e6e6e6;
+}
+.img-banner{
+    border-top: 0.6rem solid #f0f0f0;
+}
+.img-banner~.img-box{
+    margin-top:-2px;
+}
+.sub-detail-link {
+    overflow: hidden;
+    margin: 1.5rem 0;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    padding:1.5rem 0 1.5rem 1.5rem;
+    border:1px solid #e6e6e6;
+    border-radius:0.5rem;
+}
+.sub-detail-link-describe{
+    margin-left: 1rem;
+    flex-grow: 1;
+    text-decoration: none;
+}
+.sub-detail-link-describe .sub-name{
+    font-size: 1.6rem;
+    margin-top: 0;
+}
+.sub-detail-link-describe .sub-describe{
+    font-size: 1.3rem;
+    color: #9f9f9f;
+    margin-top: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.sub-detail-link-img{
+    width: 6rem;
+}
+.sub-detail-link-arrow{
+}
+.sub-detail-link-arrow img{
+    width: 3rem;
+}
+.gary-point{
+    display: inline-block;
+    height: 0.6rem;
+    width: 0.6rem;
+    background: #ccc;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    margin-bottom: 3px;
+    position: absolute;
+    left:0;
+    top:1.7rem;
+}
+.high-development{
+    display: flex;
+}
+.high-development ul{
+    flex-grow: 1;
+    padding-left: 0;
+    list-style: none;
+}
+.high-development ul li{
+    font-size: 1.6rem;
+    padding: 1rem 0;
+    color: #363636;
+    position: relative;
+}
+.high-development img{
+    width: 10rem;
+    height: 14rem;
+}
+.advantage{
+    margin: 0 0 0 1rem;
+    font-size:1.4rem;
+}
+#about-af .img-box:first-child{
+    padding-bottom: 6rem;
+}
