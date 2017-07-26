@@ -19,12 +19,13 @@ body{
     padding-left:0;
     margin: 0;
     font-size:1.4rem;
+    box-shadow: 0px 3px 10px -8px;
 }
 .header-nav ul li{
      text-align: center;
      flex-grow: 1;
      list-style-type: none;
-    flex-basis: 0;
+     flex-basis: 0;
 }
 .header-nav ul li a{
     color: #000;
@@ -60,7 +61,7 @@ body{
 }
 .img-box{
     border-top:6px solid #f0f0f0;
-    padding: 2.5rem 2rem 1.5rem 2rem;
+    padding: 2rem 2rem 1.5rem 2rem;
 }
 .img-box h2{
     margin:0;
@@ -87,7 +88,7 @@ body{
     margin-left: 0.7rem;
     display: inline-block;
     vertical-align: middle;
-    font-size:1.6rem;
+    font-size:1.5rem;
     font-weight:normal;
     color: #363636;
 }
@@ -128,19 +129,20 @@ body{
     width:100%;
 }
 .pro-btn-list{
-    border: 1px solid #e6e6e6;
+    border: 1px solid #8dc4ff;
     border-radius: 4px;
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
 .img-pro-btn{
-    padding:0.8rem 1rem ;
+    padding:0.4rem 1rem ;
     font-size: 1.2rem;
-    color: #494949;
-    background: linear-gradient(to bottom,#fff, #fbfbfb);
+    color: #479efa;
+    /*background: linear-gradient(to bottom,#fff, #fbfbfb);*/
+    background: #f0f7ff;
 }
 .img-pro-btn:nth-child(2),.img-pro-btn:nth-child(3){
-    border-left: 1px solid #e6e6e6;
+    border-left: 1px solid #8dc4ff;
 }
 .img-banner{
     border-top: 0.6rem solid #f0f0f0;
@@ -218,4 +220,88 @@ body{
 }
 #about-af .img-box:first-child{
     padding-bottom: 6rem;
+}
+.img-border{
+    border: 1px solid #e6e6e6;
+    border-radius: 0.4rem;
+}
+.sub-img-box h3 span.sub-title{
+    color: #9f9f9f;
+    font-size: 1.4rem;
+}
+.img-padding{
+    padding-top: 0.8rem;
+}
+.risk-evaluation .img-margin-top{
+    margin-top:1rem;
+}
+.risk-evaluation-title,.strategy-title{
+    padding:1.5rem;
+}
+.risk-evaluation-title h2,.strategy-title h2{
+    text-align: center;
+}
+.btn-click-pro-img-box{
+    width:100%;
+    display: block;
+    visibility: hidden;
+    position: absolute;
+    left:-9999px;
+}
+.btn-click-pro-img-box img{
+    width:100%;
+}
+.strategy .img-box{
+    padding-top:1rem;
+}
+.strategy .sub-img-box{
+    margin-top:0;
+}
+.strategy .sub-img-box img{
+    margin-top:0;
+}
+.strategy .sub-img-box > h3{
+    font-size:1.5rem;
+    font-weight:normal;
+}
+.title-icon{
+    float: left;
+    margin-right: 0.7rem;
+}
+.title-icon img{
+    width:2.5rem;
+}
+.h3-right{
+    float: right;
+}
+.text-overflow{
+    font-size:1.6rem;
+    margin-bottom:0;
+
+}
+.text-overflow .sub-title{
+    color: #9f9f9f;
+    font-size: 1.4rem;
+    margin-left:0.7rem;
+}
+.footer{
+    text-align: center;
+    margin: 0;
+    padding: 1rem;
+    font-size: 1.2rem;
+    color: #ccc;
+    background: #666;
+}
+.footer-c{
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    height: 10px;
+    width: 9px;
+    line-height: 10px;
+    padding-bottom:1px;
+}
+/*将放大图片的背景变成白色*/
+.pswp__img{
+    background: #fff;
 }
