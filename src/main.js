@@ -16,9 +16,6 @@ $(window).on('load',function(){
         });
     }
 
-    getOffsetHeight();
-
-
     /**
      * 屏幕翻转重新获取元素距顶部高度
      */
@@ -27,8 +24,6 @@ $(window).on('load',function(){
             getOffsetHeight();
         })
     }
-
-    orientationchange();
 
     /**
      * 改变导航栏
@@ -54,9 +49,7 @@ $(window).on('load',function(){
             let me = this,
                 navIndex = $(me).data('nav-index');
 
-            $(window).on('scrollstop',() => {
-                changeNav(navIndex);
-            });
+            changeNav(navIndex);
 
             // //动画滚动
             $('body').animate({'scrollTop':heightArray[navIndex] + 'px'},'fast');
@@ -65,8 +58,6 @@ $(window).on('load',function(){
 
         });
     }
-
-    navClick();
 
     /**
      * 滚动导航栏切换样式
@@ -95,8 +86,6 @@ $(window).on('load',function(){
         });
 
     }
-
-    scrollHandler();
 
     /**
      * 点击图片放大
@@ -150,10 +139,6 @@ $(window).on('load',function(){
         $('body').on('click',clickEle,openPhotoSwipe);
     }
 
-    imgPro('.pro-img');
-
-    imgPro('','.img-pro-btn');
-
     /**
      * 异步载入页面
      * @param {String} src
@@ -202,5 +187,17 @@ $(window).on('load',function(){
         })
     }
 
-    skipToChildPage();
+    /**
+     * 初始化
+     */
+    function init(){
+        getOffsetHeight();
+        orientationchange();
+        navClick();
+        scrollHandler();
+        imgPro('.pro-img');
+        imgPro('','.img-pro-btn');
+        skipToChildPage();
+    }
+    init();
 });
