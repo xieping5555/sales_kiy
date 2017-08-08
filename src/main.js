@@ -1,5 +1,7 @@
-
-import './css/common.css';
+/**
+ * AF销售工具
+ */
+import './css/index.css';
 
 $(window).on('load',function(){
     //注册fastClick
@@ -18,6 +20,7 @@ $(window).on('load',function(){
 
     /**
      * 屏幕翻转重新获取元素距顶部高度
+     * orientationchange事件在微信浏览器下面不触发，使用resize事件代替
      */
     function orientationchange(){
         $(window).on('orientationchange',() => {
@@ -82,9 +85,13 @@ $(window).on('load',function(){
         };
 
         $(window).on('scrollstop',() => {
+            //判断滚动条是否滚到了底部
+            if($(document).scrollTop() + $(window).height() >= $(document).height()){
+                changeNav(2);
+                return;
+            }
             scrollFun();
         });
-
     }
 
     /**
@@ -130,14 +137,15 @@ $(window).on('load',function(){
                     index:proImgIndex,
                     tapToClose:true,
                     maxSpreadZoom:4
-                };
-
+                }
                 imgList = imgEle ? imgInfoMap : [imgInfoMap[$(e.target).data('btn-pro-index')]];
                 const gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, imgList, options);
+
                 gallery.init();
             };
         $('body').on('click',clickEle,openPhotoSwipe);
     }
+
 
     /**
      * 异步载入页面
