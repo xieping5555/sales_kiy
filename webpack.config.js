@@ -8,7 +8,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname,'dist'),
 		filename: 'bundle.js',
-        publicPath: "/dist/"
+        publicPath: "/src/"
     },
 
 	module: {
@@ -22,7 +22,18 @@ module.exports = {
 				} 
 			},{
 				test: /\.css$/,
-				loader: 'style-loader!css-loader'
+				use: [
+					{
+						loader: 'style-loader'
+					}, {
+						loader: 'css-loader',
+						options: {
+							importLoaders: 1
+						}
+					}, {
+						loader: 'postcss-loader'
+					}
+				]
 			}
 		]
 	},
@@ -31,7 +42,7 @@ module.exports = {
 
 	devServer: {
 		contentBase: path.resolve(__dirname,'src'),
-		port: 8080,
+		port: 8081,
 		historyApiFallback: true,
 		inline: true,
 		hot: true
