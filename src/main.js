@@ -5,13 +5,16 @@
 import './css/index.css';
 import {tellTheServerStart, tellTheServerEnd, saveImgClickHavior} from "./server";
 import Timer from './js/util/timer';
+import browserInfo from './js/util/get_browser_info';
 
 $(window).on('load',() => {
     //注册fastClick
     FastClick.attach(document.body);
 
     let heightArray = [];
-
+    let visitTime = new Timer();
+    //开始记录页面访问时间
+    visitTime.start();
     /**
      * 获取每一个包裹元素距离页面顶部的高度
      */
@@ -247,7 +250,14 @@ $(window).on('load',() => {
      */
     function beforeUnload(){
         $(window).on('beforeunload',function(){
-            tellTheServerEnd();
+
+            tellTheServerEnd({
+                browser: browserInfo,
+                platform: navigator.platform,
+                DPI: window.screen.width + '*' + window.screen.height,
+                visitTime: visitTime.end(),
+                img: imgArr
+            });
         });
     }
 
@@ -255,14 +265,16 @@ $(window).on('load',() => {
      * 保存用户访问图片信息
      * @param pswp
      */
+    let imgArr = [];
     function saveImgViewInfo(pswp){
         let curImg = ''; //当前正在浏览的图片。
         let  viewTime = new Timer();
-
+        let time;
         //监听图片关闭事件
         pswp.listen('close', () => {
-            let time = viewTime.end();
-            saveImgClickHavior(curImg, time);
+            time = viewTime.end();
+            imgArr.push({imgSrc:curImg, standTime: time});
+            console.log(imgArr);
         });
 
 
@@ -279,8 +291,8 @@ $(window).on('load',() => {
 
         //滑动图片时重新结算时间和图片
         pswp.listen('afterChange', () => {
-            let time = viewTime.end();
-            saveImgClickHavior(curImg, time);
+            time = viewTime.end();
+            imgArr.push({imgSrc:curImg, standTime: time})
         })
     }
 
@@ -288,7 +300,6 @@ $(window).on('load',() => {
      * 初始化
      */
     function init(){
-        tellTheServerStart();
         beforeUnload();
         getOffsetHeight();
         setProImgIndex();
@@ -299,7 +310,6 @@ $(window).on('load',() => {
         imgPro('','.img-pro-btn');
         skipToChildPage();
         onPjaxEnd();
-
     }
     init();
 });

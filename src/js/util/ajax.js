@@ -4,8 +4,8 @@ export default function server(serverName,data,async){
     $.ajax({
         type: 'post',
         url: 'http://localhost:3000/'+serverName,
-        async:async || true,
-        data:data || {},
+        async: async || true,
+        data: data || {},
         success: () => {
 
         },

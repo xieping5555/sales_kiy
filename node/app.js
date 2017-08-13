@@ -28,29 +28,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-const userInfo = {};
-
-app.post('/tell_the_server_start', (req, res) => {
-    let IP = getIP(req);
-
-    Object.assign(userInfo, { IP:IP }, req.body);
-    res.send('success');
-});
 
 app.post('/tell_the_server_end', (req, res) => {
-    Object.assign(userInfo, req.body, {img:imgArr});
+    let info = req.body;
+    console.log(info);
+    let userInfo = Object.assign(info, {IP: getClientIp(req)});
     //访问结束，将信息写入json文件。
-
     let ws = fs.createWriteStream(__dirname + '/user_info.json', {
         flags: 'r+'
     });
-
+    console.log(userInfo);
     ws.write(JSON.stringify(userInfo));
 
     let rs = fs.createReadStream(__dirname + '/user_info.json');
     rs.setEncoding('utf-8');
     rs.on('data', (data) => {
-        console.log(data);
+
     })
     ws.on('error', (err) => {
         console.log(err);
@@ -59,11 +52,6 @@ app.post('/tell_the_server_end', (req, res) => {
     res.send('end');
 });
 
-const imgArr = [];
-app.post('/save_img_click_havior', (req, res) => {
-    imgArr.push(req.body);
-    res.send('save');
-});
 
 //默认获取到的是ipv6格式的ip，设置hostname即可得到ipv4格式的ip.
 app.listen(3000,'0.0.0.0');
