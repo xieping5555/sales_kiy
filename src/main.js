@@ -1,9 +1,12 @@
 /**
- * AF销售工具
+ * @file AF销售工具
  */
-import './css/index.css';
 
-$(window).on('load',function(){
+import './css/index.css';
+import {tellTheServerStart, tellTheServerEnd, saveImgClickHavior} from "./server";
+import Timer from './js/util/timer';
+
+$(window).on('load',() => {
     //注册fastClick
     FastClick.attach(document.body);
 
@@ -13,18 +16,30 @@ $(window).on('load',function(){
      * 获取每一个包裹元素距离页面顶部的高度
      */
     function getOffsetHeight(){
-        $('.info-part').each(function(index,item){
+        $('.info-part').each((index,item) => {
             heightArray[index] = $(item).offset().top;
         });
     }
 
     /**
+     * 给要放大的图片加上pro-img-index属性
+     */
+    function setProImgIndex(){
+        $('.pro-img').each((index,item) => {
+            $(item).data('pro-img-index',index);
+        })
+    }
+
+    /**
      * 屏幕翻转重新获取元素距顶部高度
-     * orientationchange事件在微信浏览器下面不触发，使用resize事件代替
      */
     function orientationchange(){
         $(window).on('orientationchange',() => {
             getOffsetHeight();
+
+            // if(player){
+            //     setBigButtonOffset(player);
+            // }
         })
     }
 
@@ -35,7 +50,7 @@ $(window).on('load',function(){
     function changeNav(idx){
         let navItem = $('.nav-item');
 
-        navItem.each(function(index,item){
+        navItem.each((index,item) => {
             if ( $(item).hasClass('nav-active') ) {
                 $(item).removeClass('nav-active');
             }
@@ -55,7 +70,7 @@ $(window).on('load',function(){
             changeNav(navIndex);
 
             // //动画滚动
-            $('body').animate({'scrollTop':heightArray[navIndex] + 'px'},'fast');
+            $('body').animate({'scrollTop':heightArray[navIndex]+ 1 + 'px'},'fast');
 
             return false;
 
@@ -66,28 +81,28 @@ $(window).on('load',function(){
      * 滚动导航栏切换样式
      */
     function scrollHandler (){
-        let scrollFun;
-
+        let scrollFun,
+            len = heightArray.length;
         scrollFun = () => {
             let scrTop = $(window).scrollTop();
 
-            if(heightArray[0] <= scrTop && scrTop < heightArray[1] && !$('.header-nav a').eq(0).hasClass('nav-active')){
-                changeNav(0);
-            }
-
-            if(heightArray[1] <= scrTop && scrTop < heightArray[2] && !$('.header-nav a').eq(1).hasClass('nav-active')){
-                changeNav(1);
-            }
-
-            if(scrTop > heightArray[2] && !$('.header-nav a').eq(2).hasClass('nav-active')){
-                changeNav(2);
-            }
+            heightArray.forEach((item,i) => {
+                let navHasClass = !$('.header-nav a').eq(i).hasClass('nav-active');
+                if(i === len - 1){
+                    if(heightArray[i] <= scrTop && navHasClass){
+                        changeNav(i);
+                    }
+                }else{
+                    if(heightArray[i] <= scrTop && scrTop < heightArray[i+1] && navHasClass){
+                        changeNav(i);
+                    }
+                }
+            })
         };
-
         $(window).on('scrollstop',() => {
             //判断滚动条是否滚到了底部
             if($(document).scrollTop() + $(window).height() >= $(document).height()){
-                changeNav(2);
+                changeNav(len - 1);
                 return;
             }
             scrollFun();
@@ -137,61 +152,135 @@ $(window).on('load',function(){
                     index:proImgIndex,
                     tapToClose:true,
                     maxSpreadZoom:4
-                }
+                };
                 imgList = imgEle ? imgInfoMap : [imgInfoMap[$(e.target).data('btn-pro-index')]];
                 const gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, imgList, options);
 
                 gallery.init();
+
+                saveImgViewInfo(gallery);
             };
         $('body').on('click',clickEle,openPhotoSwipe);
     }
 
 
     /**
-     * 异步载入页面
-     * @param {String} src
-     * @param {Function} callback
+     * 使用pjax无刷新载入子页面
      */
-    function loadPage(src,callback){
-        $('.body-content').load(src,callback);
+    function skipToChildPage(){
+        $(document).pjax('a.sub-detail-link-describe','.body-content');
+        //setVideo();
     }
 
     /**
-     * 跳转到子页面
+     * pjax success时设置videojs
      */
-    function skipToChildPage(){
-        $('body').on('click','.sub-detail-link',function(e){
-            let pageType = $(e.currentTarget).data('page-type') || 0;
+    var player = {};
+    function setVideo(){
+        $(document).on('pjax:success', () => {
 
-            switch (pageType){
+            let id = setVideoRandomId('.video-js');
 
-                case 'risk_evaluation':
-
-                    loadPage('/html/risk_evaluation.html');
-                    history.pushState({
-                        page:'risk_evaluation'
-                    },'','risk_evaluation.html');
-                    $('body').scrollTop(0);
-                    break;
-
-                case 'strategy':
-
-                    loadPage('/html/strategy.html');
-                    history.pushState({
-                        page:'strategy'
-                    },'','strategy.html');
-                    $('body').scrollTop(0);
-                    break;
-
-                default:
+            if(id){
+                player = initVideo(id);
+                debugger;
+                setBigButtonOffset(player);
             }
+        })
+    }
 
-            $(window).on('popstate',function(){
-                loadPage('/html/home.html');
-                $('body').animate({'scrollTop':0 },'fast');
-            });
+    /**
+     * 载入页面时设置pro-img的index值
+     */
+    function onPjaxEnd(){
+        $(document).on('pjax:end',() => {
+            setProImgIndex();
+        })
+    }
 
+    /**
+     * 为video标签生成随机数id
+     * @param {String} videoClassName
+     */
+    function setVideoRandomId(videoClassName){
+        let ranNum = Math.ceil(Math.random()*10000000 + 10000000);
+        let videoId = 'videoId' + ranNum;
+
+        if($(videoClassName).length){
+            $(videoClassName).attr('id',videoId);
+            return videoId;
+        }else{
             return false;
+        }
+
+    }
+
+    /**
+     * 初始化videojs
+     * @param {String} id
+     */
+    function initVideo(id){
+        let player = videojs(id);
+
+        return player;
+    }
+
+    /**
+     * 设置播放按钮的offset和视频区域的高度
+     * @param {Object} player
+     */
+    function setBigButtonOffset(player){
+
+        let playWidth = player.currentWidth();
+        //设置视频区域的高度
+        player.height(playWidth*(9/16));
+
+        //设置bigPlayButton的offset
+        let bigPB = player.bigPlayButton;
+        let playHeight = player.currentHeight();
+        bigPB.el_.style.left = (playWidth - bigPB.currentWidth())/2 + 'px';
+        bigPB.el_.style.top = (playHeight -bigPB.currentHeight())/2 + 'px';
+    }
+
+    /**
+     * 监听页面关闭或刷新事件
+     */
+    function beforeUnload(){
+        $(window).on('beforeunload',function(){
+            tellTheServerEnd();
+        });
+    }
+
+    /**
+     * 保存用户访问图片信息
+     * @param pswp
+     */
+    function saveImgViewInfo(pswp){
+        let curImg = ''; //当前正在浏览的图片。
+        let  viewTime = new Timer();
+
+        //监听图片关闭事件
+        pswp.listen('close', () => {
+            let time = viewTime.end();
+            saveImgClickHavior(curImg, time);
+        });
+
+
+        //监听图片放大载入完毕事件
+        pswp.listen('imageLoadComplete', (index, item) => {
+            let imgSrc = item.src.match(/\/imgs.+/g)[0];
+            curImg = imgSrc;
+            //先重置计时器
+            viewTime.reset();
+            //开始计算浏览时间
+            viewTime.start();
+
+        });
+
+        //滑动图片时重新结算时间和图片
+        pswp.listen('afterChange', () => {
+            let time = viewTime.end();
+            saveImgClickHavior(curImg, time);
         })
     }
 
@@ -199,13 +288,18 @@ $(window).on('load',function(){
      * 初始化
      */
     function init(){
+        tellTheServerStart();
+        beforeUnload();
         getOffsetHeight();
+        setProImgIndex();
         orientationchange();
         navClick();
         scrollHandler();
         imgPro('.pro-img');
         imgPro('','.img-pro-btn');
         skipToChildPage();
+        onPjaxEnd();
+
     }
     init();
 });

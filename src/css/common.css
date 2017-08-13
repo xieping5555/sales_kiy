@@ -1,26 +1,33 @@
+:root{
+    --font-size: 62.5%;
+    --headernav-backgroundcolor: #fff;
+    --headernav-ul-boxshodow: 0px 0.3rem 1rem -0.8rem;
+    --headernav-ul-fontsize: 1.4rem;
+}
 html{
-    font-size: 62.5%;
+    font-size: var(--font-size);
 }
 body{
     margin: 0;
     padding: 0;
     font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
 }
+
 .header-nav{
     position: fixed;
     width:100%;
     top:0;
-    background: #fff;
+    background: var(--headernav-backgroundcolor);
 }
 .header-nav ul{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding-left:0;
-    margin: 0;
-    font-size:1.4rem;
-    box-shadow: 0px 3px 10px -8px;
-}
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     padding-left:0;
+     margin: 0;
+     font-size: var(--headernav-ul-fontsize);
+     box-shadow: var(--headernav-ul-boxshodow);
+ }
 .header-nav ul li{
      text-align: center;
      flex-grow: 1;
@@ -194,7 +201,7 @@ body{
     margin-bottom: 3px;
     position: absolute;
     left:0;
-    top:1.7rem;
+    top:43%;
 }
 .high-development{
     display: flex;
@@ -202,7 +209,7 @@ body{
 .high-development ul{
     flex-grow: 1;
     padding-left: 0;
-    list-style: none;
+    margin-left: 2rem;
 }
 .high-development ul li{
     font-size: 1.6rem;
@@ -215,7 +222,7 @@ body{
     height: 14rem;
 }
 .advantage{
-    margin: 0 0 0 1rem;
+    margin: 0 0 0 -0.7rem;
     font-size:1.4rem;
 }
 #about-af .img-box:first-child{
@@ -299,7 +306,10 @@ body{
     height: 10px;
     width: 9px;
     line-height: 10px;
-    padding-bottom:1px;
+    padding: 0px 2px 2px 1px;
+}
+.sub-img-box-title img{
+
 }
 /*将放大图片的背景变成白色*/
 .pswp__img{

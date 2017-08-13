@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 
-
 module.exports = {
 	entry: path.resolve(__dirname,'src/main.js'),
 
@@ -22,21 +21,20 @@ module.exports = {
 				} 
 			},{
 				test: /\.css$/,
-				use: [
-					{
-						loader: 'style-loader'
-					}, {
-						loader: 'css-loader',
-						options: {
-							importLoaders: 1
-						}
-					}, {
-						loader: 'postcss-loader'
+				use: [{
+					loader: 'style-loader'
+				},{
+					loader: 'css-loader',
+					options: {
+						importLoaders: 1
 					}
-				]
+				}, {
+					loader: 'postcss-loader'
+				}]
 			}
 		]
 	},
+
 
 	devtool:'#evel-source-map',
 

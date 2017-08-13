@@ -1,0 +1,55 @@
+/* Change all text and icon colors in the player. */
+.vjs-matrix.video-js {
+    color: #fff;
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid #eee;
+    border-radius: 0.4rem;
+    overflow: hidden;
+}
+
+
+/* Change the border of the big play button. */
+.vjs-matrix .vjs-big-play-button {
+    border: 2px solid #fff;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+}
+
+
+/* Change the color of various "bars". */
+.vjs-matrix .vjs-volume-level,
+.vjs-matrix .vjs-play-progress,
+.vjs-matrix .vjs-slider-bar {
+    background: #fff;
+}
+
+@media screen and (min-width: 768px) {
+    .vjs-matrix.video-js {
+          height: 40rem;
+      }
+    .vjs-matrix .vjs-big-play-button{
+        left: 46%;
+        top: 44%;
+    }
+}
+
+
+::-webkit-media-controls-panel {
+    display: none!important;
+    -webkit-appearance: none;
+}
+
+*::--webkit-media-controls-play-button {
+    display: none!important;
+    -webkit-appearance: none;
+}
+/* New shadow dom for play button */
+/* This one works */
+
+*::-webkit-media-controls-start-playback-button {
+    display: none!important;
+    -webkit-appearance: none;
+}
